@@ -38,8 +38,9 @@ class SubscanService {
 
         const config = {
             headers: {
-                'Content-Type': 'application-json',
-                'X-API-Key': this.apiKey
+                'Content-Type': 'application/json',
+                'X-API-Key': this.apiKey,
+                'Accept': 'application/json'
             }
         };
 
