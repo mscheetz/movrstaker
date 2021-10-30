@@ -2,7 +2,7 @@
 //import { StakingReward } from "server/classes/staking-reward.class";
 import { StakingData } from "../interfaces/staking-data.interface"; 
 import { StakingReward } from "../interfaces/staking-reward.interface";
-import CoinGeckoService from "./coin-geck.service";
+import CoinGeckoService from "./coin-gecko.service";
 import SubscanService from "./subscan.service";
 
 class MovrService {
@@ -16,10 +16,14 @@ class MovrService {
 
     public getAddressDetails = async(address: string) => {
         console.log(`Getting address details for: ${address}`);
+        console.log('Get Rewards');
         const rewards = await this.getRewards(address);
+        console.log('Get Staked MOVR info');
         const staked = await this.getMovrStaked(address);
+        console.log('Get MOVR Price');
         const price = await this.getPrice();
 
+        console.log('Build Data');
         const datas: StakingData = {
             address: address,
             price: price,
@@ -62,6 +66,7 @@ class MovrService {
             }
         }
 
+        console.log('Return data sending');
         return datas;
     }
 
