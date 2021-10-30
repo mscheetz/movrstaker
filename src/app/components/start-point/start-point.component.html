@@ -1,0 +1,8 @@
+<div>
+    <div class="form-group">
+        <label for="address">Enter your MOVR wallet address:</label><br>
+        <input type="text" [(ngModel)]="address" name="address" minlength="42" style="width:300px;" /> 
+        <button type="button" class="btn btn-default" (click)="getInfo()" >Get Stats</button>
+    </div>
+    <app-stake-info *ngIf="stakingData.address !== ''" [stakingData]="stakingData"></app-stake-info>
+</div>

@@ -1,0 +1,23 @@
+<div>
+    <div>
+        Address: <strong>{{stakingData.address}}</strong>
+    </div>
+    <div>
+        Current $MOVR Price: <strong>${{stakingData.price}} (USD)</strong>
+    </div>
+    <div>
+        Staked $MOVR: <strong>{{stakingData.totalStaked}}</strong>
+    </div>
+    <div>
+        $MOVR Total Rewards: <strong>{{stakingData.totalReward}}</strong>
+    </div>
+    <div>
+        Total Staking Time: <strong>{{stakingData.stakingTotalTime}}</strong>
+    </div>
+    <div>
+        Total Staking Hours: <strong>{{stakingData.stakingHours}}</strong>
+    </div>
+    <div>
+        <app-rewards [rewards]="stakingData.rewards"></app-rewards>
+    </div>
+</div>
