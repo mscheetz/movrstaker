@@ -38,11 +38,6 @@ class MovrService {
             avgRewardHr48: 0,
             avgRewardHr6: 0
         };
-        // stakingRewards.address = address;
-        // stakingRewards.price = price;
-        // stakingRewards.totalStaked = staked;
-        // stakingRewards.now = Math.floor(Date.now()/1000);
-        // stakingRewards.potentialIntervals = [1, 7, 14, 30, 60, 90, 180, 270, 365, 730];
         if(rewards.length > 0) {
             datas.rewards = rewards.map(x => x.reward);
             datas.totalReward = datas.rewards.reduce((tot: number, val: number) => tot + val, 0);
@@ -102,23 +97,23 @@ class MovrService {
 
         while (moreRewards) {
             const response = await this.subscan.rewards(address, page, rows);
-            console.log('getRewards response', response);
-            if(response !== null && response.message.toLowerCase() === "success") {
+
+            if(response !== null && response.message.toLowerCase() === "success" && response.data.count > 0) {
+                
                 const totalRewards = response.data.count;
                 if(rows * (page + 1) >= totalRewards){
                     moreRewards = false;
                 }
                 
-                const subset: StakingReward[] = response.data.list.filter((x: { module_id: string; }) => x.module_id === "parachainstaking")
+                const subset: StakingReward[] = response.data.list.filter((x: { module_id: string; }) => x.module_id === "parachainstaking");
+                
+                const rewardSubset = 
+                    subset
                     .map((x: any) => {
-                        return <StakingReward> { reward: +x.item.amount / Math.pow(10,18), timestamp:  x.block_timestamp }
+                        return <StakingReward> { reward: +x.amount / Math.pow(10,18), timestamp:  x.block_timestamp }
                     });
 
-                rewards.push.apply(rewards, subset);
-                // response.data.list.filter((x: { event_id: string; }) => x.event_id === "Reward").forEach((item: { amount: string | number; }) => {
-                //     const reward = +item.amount / Math.pow(10,18);
-                //     rewards.push(reward);
-                // });
+                rewards.push.apply(rewards, rewardSubset);
 
                 page++;
             } else {

@@ -7,7 +7,7 @@ class MovrController {
 
     static getData = async(req: Request, res: Response) => {
         const address = req.params.address;
-        console.log(`New address request: ${address}`);
+        
         const svc = new MovrService();
         
         const rewards = await svc.getAddressDetails(address);
