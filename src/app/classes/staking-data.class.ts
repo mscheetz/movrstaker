@@ -1,3 +1,5 @@
+import { RewardFuture } from "./reward-future.class";
+
 export class StakingData {
     constructor() {}
 
@@ -17,4 +19,5 @@ export class StakingData {
     stakingHours: number = 0;
     stakingTotalTime: string = "";
     potentialIntervals: number[] = [];
+    futureRewards: RewardFuture[] = [];
 }

@@ -18,6 +18,30 @@
         Total Staking Hours: <strong>{{stakingData.stakingHours}}</strong>
     </div>
     <div>
+        <table>
+            <thead>
+                <td></td>
+                <td>$MOVR</td>
+                <td>$ USD</td>
+                <td>Hours (Til 1 MOVR)</td>
+                <td>Days (Til 1 MOVR)</td>
+                <td>Hours (Til Next MOVR)</td>
+                <td>Days (Til Next MOVR)</td>
+            </thead>
+            <tbody>
+                <tr *ngFor="let fut of stakingData.futureRewards">
+                    <td>{{fut.label}}</td>
+                    <td>{{fut.movr}}</td>
+                    <td>${{fut.usd}}</td>
+                    <td>{{fut.hrsTil1Movr}}</td>
+                    <td>{{fut.daysTil1Movr}}</td>
+                    <td>{{fut.hrsTilNextMovr}}</td>
+                    <td>{{fut.daysTilNextMovr}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
         <app-rewards [rewards]="stakingData.rewards"></app-rewards>
     </div>
 </div>
