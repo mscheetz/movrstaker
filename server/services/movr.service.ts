@@ -1,5 +1,6 @@
 //import { StakingData } from "server/classes/staking-data.class";
 //import { StakingReward } from "server/classes/staking-reward.class";
+import { RewardFuture } from "../interfaces/reward-future.interface";
 import { StakingData } from "../interfaces/staking-data.interface"; 
 import { StakingReward } from "../interfaces/staking-reward.interface";
 import CoinGeckoService from "./coin-gecko.service";
@@ -40,7 +41,8 @@ class MovrService {
             avgRewardHr12: 0,
             avgRewardHr24: 0,
             avgRewardHr48: 0,
-            avgRewardHr6: 0
+            avgRewardHr6: 0,
+            futureRewards: []
         };
         if(rewards.length > 0) {
             datas.rewards = rewards.map(x => x.reward);
@@ -64,10 +66,67 @@ class MovrService {
                     datas.avgRewardHr48 = datas.rewards.slice(0, 47).reduce((tot: number, val: number) => tot + val, 0) / 48;
                 }
             }
+            datas.futureRewards = this.getFutureRewards(price, datas.totalReward, datas.stakingHours, datas.rewards);
         }
 
         console.log('Return data sending');
         return datas;
+    }
+
+    private getFutureRewards(price: number, total: number, hours: number, rewards: number[]): RewardFuture[] {
+        const futureRewards: RewardFuture[] = [];
+
+        let future: RewardFuture = {
+            index: 0,
+            label: 'Avg Rewards/Hr (Total)',
+            movr: total / hours
+        };
+        future.usd = future.movr * price;
+        future.hrsTil1Movr = 1 / future.movr;
+        future.daysTil1Movr = future.hrsTil1Movr / 24;
+        const diff = (total - Math.floor(total));
+        console.log('total', total);
+        console.log('floor', Math.floor(total));
+        console.log('diff', diff);
+        const num = 1 - diff;
+        console.log('num', num);
+        future.hrsTilNextMovr = (1 - (total - Math.floor(total))) / future.movr;
+        future.daysTilNextMovr = future.hrsTilNextMovr / 24;
+
+        futureRewards.push(future);
+        
+        future = {
+            index: 1,
+            label: 'Avg Rewards/Day (Total)',
+            movr: futureRewards[0].movr * 24
+        };
+        future.usd = future.movr * price;
+
+        futureRewards.push(future);
+
+        const hrs = [ 48, 24, 12, 6 ];
+
+        let idx = 2;
+        for(let hr of hrs){
+            const subset = rewards.slice(0, (hr - 1));
+            const subTotal = subset.reduce((tot: number, val: number) => tot + val, 0);
+            
+            let future: RewardFuture = {
+                index: idx,
+                label: `Avg Rewards/Hr (Last ${hr})`,
+                movr: subTotal / hr
+            };
+            future.usd = future.movr * price;
+            future.hrsTil1Movr = 1 / future.movr;
+            future.daysTil1Movr = future.hrsTil1Movr / 24;
+            future.hrsTilNextMovr = (1 - (total - Math.floor(total))) / future.movr;
+            future.daysTilNextMovr = future.hrsTilNextMovr / 24;
+
+            futureRewards.push(future);
+            idx++;
+        }
+
+        return futureRewards;
     }
 
     private getTimeDiff(difference: number): string{

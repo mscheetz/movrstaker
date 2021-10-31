@@ -1,3 +1,5 @@
+import { RewardFuture } from "./reward-future.interface";
+
 export interface StakingData {
     
     totalStaked: number;
@@ -16,4 +18,5 @@ export interface StakingData {
     stakingHours: number;
     stakingTotalTime: string;
     potentialIntervals: number[];
+    futureRewards: RewardFuture[];
 }
