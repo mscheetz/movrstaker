@@ -1,25 +1,27 @@
 <div>
-    <div>
-        Address: <strong>{{stakingData.address}}</strong>
-    </div>
-    <div>
-        Current $MOVR Price: <strong>${{stakingData.price}} (USD)</strong>
-    </div>
-    <div>
-        Staked $MOVR: <strong>{{stakingData.totalStaked}}</strong>
-    </div>
-    <div>
-        $MOVR Total Rewards: <strong>{{stakingData.totalReward}}</strong>
-    </div>
-    <div>
-        Total Staking Time: <strong>{{stakingData.stakingTotalTime}}</strong>
-    </div>
-    <div>
-        Total Staking Hours: <strong>{{stakingData.stakingHours}}</strong>
-    </div>
-    <div>
-        <table>
-            <thead>
+    <p-card [style]="{ 'width': '500px', 'background-color': '#FFF'}">
+        <div>
+            Address: <strong>{{stakingData.address}}</strong>
+        </div>
+        <div>
+            Current $MOVR Price: <strong>${{stakingData.price | currency}} (USD)</strong>
+        </div>
+        <div>
+            Staked $MOVR: <strong>{{stakingData.totalStaked}} ({{ stakingData.price * stakingData.totalStaked | currency }})</strong>
+        </div>
+        <div>
+            $MOVR Total Rewards: <strong>{{stakingData.totalReward}}</strong>
+        </div>
+        <div>
+            Total Staking Time: <strong>{{stakingData.stakingTotalTime}}</strong>
+        </div>
+        <div>
+            Total Staking Hours: <strong>{{stakingData.stakingHours}}</strong>
+        </div>
+    </p-card>
+    <p-table [value]="stakingData.futureRewards">
+        <ng-template pTemplate="header">
+            <tr style="color: #000;">
                 <td></td>
                 <td>$MOVR</td>
                 <td>$ USD</td>
@@ -27,20 +29,20 @@
                 <td>Days (Til 1 MOVR)</td>
                 <td>Hours (Til Next MOVR)</td>
                 <td>Days (Til Next MOVR)</td>
-            </thead>
-            <tbody>
-                <tr *ngFor="let fut of stakingData.futureRewards">
-                    <td>{{fut.label}}</td>
-                    <td>{{fut.movr}}</td>
-                    <td>${{fut.usd}}</td>
-                    <td>{{fut.hrsTil1Movr}}</td>
-                    <td>{{fut.daysTil1Movr}}</td>
-                    <td>{{fut.hrsTilNextMovr}}</td>
-                    <td>{{fut.daysTilNextMovr}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fut>
+            <tr>
+                <td>{{fut.label}}</td>
+                <td>{{fut.movr}}</td>
+                <td>${{fut.usd}}</td>
+                <td>{{fut.hrsTil1Movr}}</td>
+                <td>{{fut.daysTil1Movr}}</td>
+                <td>{{fut.hrsTilNextMovr}}</td>
+                <td>{{fut.daysTilNextMovr}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
     <div>
         <app-rewards [rewards]="stakingData.rewards"></app-rewards>
     </div>

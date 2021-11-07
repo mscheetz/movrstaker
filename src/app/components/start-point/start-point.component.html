@@ -1,8 +1,9 @@
-<div>
-    <div class="form-group">
+<div class="p-grid">
+    <p-card [style]="{ 'width': '500px'}">
         <label for="address">Enter your MOVR wallet address:</label><br>
-        <input type="text" [(ngModel)]="address" name="address" minlength="42" style="width:300px;" /> 
-        <button type="button" class="btn btn-default" (click)="getInfo()" >Get Stats</button>
-    </div>
+        <input type="text" pInputText [(ngModel)]="address" name="address" minlength="42" style="width:300px;" placeholder="0x..." /> 
+        <button *ngIf="!fetchingData" type="button" pButton class="btn btn-default" (click)="getInfo()" >Get Stats</button>
+        <i *ngIf="fetchingData" class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    </p-card>
     <app-stake-info *ngIf="stakingData.address !== ''" [stakingData]="stakingData"></app-stake-info>
 </div>

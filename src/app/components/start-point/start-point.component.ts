@@ -13,15 +13,18 @@ export class StartPointComponent implements OnInit {
 
   address: string = "";
   stakingData: StakingData = new StakingData();
+  fetchingData: boolean = false;
 
   ngOnInit(): void {
   }
 
   getInfo() {
     if(this.address !== "") {
+      this.fetchingData = true;
       this.restSvc.info(this.address)
                   .subscribe(res => {
                     this.stakingData = res;
+                    this.fetchingData = false;
                   });
     }
   }
