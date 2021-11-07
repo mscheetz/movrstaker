@@ -1,0 +1,16 @@
+<p-card [style]="{'background-color': '#FFF'}">
+    <h1 style="color: #000;">Welcome to MOVR Stakr!</h1>
+    <h4 style="color: #000;">Check the stats on your MOVR Staking</h4>
+
+    <div class="p-grid">
+        <p-card [style]="{ 'width': '500px'}">
+            <label for="address">Enter your MOVR wallet address:</label><br>
+            <div class="p-grid">
+                <input type="text" pInputText [(ngModel)]="address" name="address" minlength="42" style="width:320px;" placeholder="0x..." /> 
+                <button *ngIf="!fetchingData" type="button" pButton class="btn btn-default" (click)="getInfo()" style="margin-left: 5px;" >Get Stats</button>
+                <i *ngIf="fetchingData" class="pi pi-spin pi-spinner" style="font-size: 1.4rem; margin-left: 5px;"></i>
+            </div>
+        </p-card>
+        <app-stake-info *ngIf="stakingData.address !== ''" [stakingData]="stakingData"></app-stake-info>
+    </div>
+</p-card>

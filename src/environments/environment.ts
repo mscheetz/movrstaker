@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  PORT: 3000,
+  COOKIE: "movr-stakr-cookie",
+  LOGIN: "/api/v1/login",
+  ADDRESSES: "/api/v1/address",
+  STAKE_INFO: "/api/v1/info",
 };
 
 /*

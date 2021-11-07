@@ -1,0 +1,86 @@
+<div>
+    <p-card [style]="{ 'width': '550px', 'margin-top': '5px'}">
+        <div>
+            Address: <strong>{{stakingData.address}}</strong>
+        </div>
+        <div>
+            Current $MOVR Price: <strong>{{stakingData.price | currency}} (USD)</strong>
+        </div>
+        <div>
+            Staked $MOVR: <strong>{{stakingData.totalStaked}} ({{ stakingData.price * stakingData.totalStaked | currency }})</strong>
+        </div>
+        <div>
+            $MOVR Total Rewards: <strong>{{stakingData.totalReward}}</strong>
+        </div>
+        <div>
+            Total Staking Time: <strong>{{stakingData.stakingTotalTime}}</strong>
+        </div>
+        <div>
+            Total Staking Hours: <strong>{{stakingData.stakingHours}}</strong>
+        </div>
+    </p-card>
+    <h4>Projections (Based on avg rewards/day)</h4>
+    <p-table [value]="stakingData.potentialIntervals" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr style="color: #000;">
+                <td>Period</td>
+                <td>Reward</td>
+                <td>% of Initial</td>
+                <td>Current Value (USD)</td>
+                <td>Value $500/MOVR</td>
+                <td>Value $900</td>
+                <td>Value $1000</td>
+                <td>Value $2000</td>
+                <td>Value $5000</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-int>
+            <tr>
+                <td *ngIf="int < 365">{{ int }} 
+                    <span *ngIf="int === 1">Day</span>
+                    <span *ngIf="int > 1 && int < 365">Days</span>
+                </td>
+                <td *ngIf="int >= 365">{{ int / 365 }} 
+                    <span *ngIf="int === 365">Year</span>
+                    <span *ngIf="int > 365">Years</span>
+                </td>
+                <td>{{ int * stakingData.futureRewards[1].movr | number : '1.10-10' }}</td>
+                <td>{{ ((int * stakingData.futureRewards[1].movr) / stakingData.totalStaked) | percent : '1.2-2' }}</td>
+                <td>{{ (int * stakingData.futureRewards[1].movr) * stakingData.price | currency }}</td>
+                <td>{{ (int * stakingData.futureRewards[1].movr) * 500 | currency }}</td>
+                <td>{{ (int * stakingData.futureRewards[1].movr) * 900 | currency }}</td>
+                <td>{{ (int * stakingData.futureRewards[1].movr) * 1000 | currency }}</td>
+                <td>{{ (int * stakingData.futureRewards[1].movr) * 2000 | currency }}</td>
+                <td>{{ (int * stakingData.futureRewards[1].movr) * 5000 | currency }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <h4>Averages</h4>
+    <p-table [value]="stakingData.futureRewards" styleClass="p-datatable-sm">
+        <ng-template pTemplate="header">
+            <tr style="color: #000;">
+                <td></td>
+                <td>$MOVR</td>
+                <td>$ USD</td>
+                <td>Hours (Til 1 MOVR)</td>
+                <td>Days (Til 1 MOVR)</td>
+                <td>Hours (Til Next MOVR)</td>
+                <td>Days (Til Next MOVR)</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-fut>
+            <tr>
+                <td>{{fut.label}}</td>
+                <td>{{fut.movr | number : '1.10-10' }}</td>
+                <td>${{fut.usd | number : '1.10-10' }}</td>
+                <td>{{fut.hrsTil1Movr | number : '1.2-2' }}</td>
+                <td>{{fut.daysTil1Movr | number : '1.2-2' }}</td>
+                <td>{{fut.hrsTilNextMovr | number : '1.2-2' }}</td>
+                <td>{{fut.daysTilNextMovr | number : '1.2-2' }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <div>
+        <app-rewards [rewards]="stakingData.rewards"></app-rewards>
+    </div>
+</div>
