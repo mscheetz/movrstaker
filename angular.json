@@ -32,7 +32,10 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/terminal.css/dist/terminal.css"
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/vela-purple/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeflex/primeflex.css"
             ],
             "scripts": []
           },
