@@ -8,16 +8,17 @@ import { RestService } from './core/rest.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'movrstakr';
+
   constructor(private restSvc: RestService, private coreSvc: CoreService) {    
     this.login();
   }
 
   login(){
-    this.restSvc.getToken()
-                .subscribe(res => {
-                  this.coreSvc.setCookie(res);
-                });
+    // this.coreSvc.removeCookie();
+    // this.restSvc.getToken()
+    //             .subscribe(res => {
+    //               this.coreSvc.setCookie(res);
+    //             });
   }
 
 }

@@ -8,14 +8,20 @@ import { RewardsComponent } from './components/rewards/rewards.component';
 import { FutureComponent } from './components/future/future.component';
 import { StakeInfoComponent } from './components/stake-info/stake-info.component';
 import { StartPointComponent } from './components/start-point/start-point.component';
+import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './core/auth.interceptor';
 
-import { ButtonModule } from 'node_modules/primeng/button';
+import { QRCodeModule } from 'angular2-qrcode';
+
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { InputTextModule } from 'node_modules/primeng/inputtext';
-import { TableModule } from 'node_modules/primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [
@@ -23,7 +29,8 @@ import { TableModule } from 'node_modules/primeng/table';
     RewardsComponent,
     FutureComponent,
     StakeInfoComponent,
-    StartPointComponent
+    StartPointComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -32,12 +39,16 @@ import { TableModule } from 'node_modules/primeng/table';
     AppRoutingModule,
     FormsModule,
     ButtonModule,
+    DialogModule,
     CardModule,
     InputTextModule,
-    TableModule
+    QRCodeModule,
+    TableModule,
+    ToastModule
   ],
   providers: [ 
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

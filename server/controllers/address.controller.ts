@@ -14,8 +14,9 @@ class AddressController {
         addresses.dot = process.env.DOT_ADDRESS!;
         addresses.erc20 = process.env.ERC20_ADDRESS!;
         addresses.xhv = process.env.XHV_ADDRESS!;
+        addresses.xmr = process.env.XMR_ADDRESS!;
 
-        return addresses;
+        res.status(200).json(addresses);
     }
     
     static deriveBtcAddress = async() => {

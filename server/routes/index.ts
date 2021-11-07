@@ -7,8 +7,8 @@ import { jwtCheck } from '../middleware/auth.middleware';
 
 const router = Router();
 
-router.get('/v1/info/:address', [ logReq, jwtCheck ], MovrController.getData);
-router.get('/v1/address', [ logReq, jwtCheck ], AddressController.getAddresses);
+router.get('/v1/info/:address', [ logReq ], MovrController.getData);
+router.get('/v1/address', [ logReq ], AddressController.getAddresses);
 router.get('/v1/login', [ logReq ], LoginController.login);
 
 export default router;

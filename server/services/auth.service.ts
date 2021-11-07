@@ -12,7 +12,7 @@ class AuthService {
     public getToken = async(payload: any): Promise<string> => {
         try {
             const oneDay = 60 * 60 * 24;
-            const token = jwt.sign(payload, this.tokenSecret);
+            const token = jwt.sign(payload, this.tokenSecret, { expiresIn: oneDay });
 
             return token;
         } catch(err) {

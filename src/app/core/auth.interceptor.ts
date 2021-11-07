@@ -11,9 +11,9 @@ export class AuthInterceptor implements HttpInterceptor {
         const jwt = this.coreSvc.getCookie();
 
         if(jwt) {
-            req = req.clone({
-                setHeaders: { Authorization: `Bearer ${jwt}`}
-            });
+            // req = req.clone({
+            //     setHeaders: { Authorization: `Bearer ${jwt}`}
+            // });
         }
         
         return next.handle(req);

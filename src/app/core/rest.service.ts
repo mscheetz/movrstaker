@@ -2,7 +2,6 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from "rxjs";
-import { StakingData } from "server/classes/staking-data.class";
 
 @Injectable({providedIn: 'root'})
 export class RestService {
@@ -24,10 +23,10 @@ export class RestService {
         return this.http.get(url);
     }
 
-    addresses(): Observable<string> {
+    addresses(): Observable<any> {
         const endpoint = environment.ADDRESSES;
         const url = `${this.baseUrl}${endpoint}`;
 
-        return this.http.get(url, {responseType: 'text'});
+        return this.http.get(url, {responseType: 'json'});
     }
 }

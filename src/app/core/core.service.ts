@@ -21,4 +21,8 @@ export class CoreService {
 
         return true;
     }
+
+    removeCookie(): void {
+        this.cookieSvc.delete(environment.COOKIE);        
+    }
 }
