@@ -7,7 +7,7 @@ import { Observable } from "rxjs";
 export class RestService {
     constructor(private http: HttpClient) {}
 
-    private baseUrl: string = "http://localhost:80";
+    private baseUrl: string = "";
     
     getToken(): Observable<string> {
         const endpoint = environment.LOGIN;
