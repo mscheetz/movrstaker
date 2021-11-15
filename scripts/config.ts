@@ -1,10 +1,10 @@
 import { writeFile } from 'fs';
-import { argv } from 'yargs';
+import { argv, env } from 'yargs';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
 
-const environment = process.env.ENVIRONMENT;
+const environment = argv['environment'];
 const isProduction = environment === 'prod';
 const targetPath = isProduction
    ? `./src/environments/environment.prod.ts`
@@ -13,11 +13,12 @@ const targetPath = isProduction
 const environmentFileContent = `
 export const environment = {
    production: ${isProduction},
-   PORT: "${process.env.ADDRESS}",
+   ENVIRONMENT: "${environment.toUpperCase()}",
+   PORT: ${process.env.PORT},
    COOKIE: "${process.env.COOKIE}",
    LOGIN: "${process.env.LOGIN}",
-   ADDRESSES: "${process.env.BAKE}",
-   STAKE_INFO: "${process.env.VERSIONS}",
+   ADDRESSES: "${process.env.ADDRESSES}",
+   STAKE_INFO: "${process.env.STAKE_INFO}",
 };
 `;
 

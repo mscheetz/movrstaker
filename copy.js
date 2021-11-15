@@ -18,10 +18,16 @@ function copyFolder(source, target) {
     
     console.log(`Copying source: ${source} to target: ${target}`);
 
-    let targetFolder = path.join(target, path.basename(source));
+    let targetFolder = "./" + path.join(target, path.basename(source));
 
     if(!fs.existsSync(targetFolder)){
-        fs.mkdirSync(targetFolder);
+        console.log(`Target dir does not exist: '${targetFolder}'. Creating now. source: '${source}'  target: '${target}'`);
+        try {
+            fs.mkdirSync(targetFolder);
+        } catch(err) {
+            console.log(err);
+        }
+        console.log(`${targetFolder} created.`);
     }
 
     if(fs.lstatSync(source).isDirectory()){
@@ -43,12 +49,6 @@ copyFolder('./server/node_modules', './dist');
 
 console.log(`Successfully copied node_modules`);
 
-console.log(`Copying server/templates`);
-
-copyFolder('./server/templates', './dist');
-
-console.log(`Successfully copied templates`);
-
 console.log(`Copying /static`);
 
 copyFolder('./static', './dist');
@@ -66,3 +66,9 @@ console.log(`Copying package.json`);
 copySync('package.json', './dist');
 
 console.log(`Successfully copied package.json`);
+
+// console.log('Copying /dist/movrstakr');
+
+// copySync('./dist/movrstakr', './dist');
+
+// console.log('Succesfully copied /dist/movrstakr');
