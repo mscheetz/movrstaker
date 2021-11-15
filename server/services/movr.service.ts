@@ -16,15 +16,10 @@ class MovrService {
     }
 
     public getAddressDetails = async(address: string) => {
-        console.log(`Getting address details for: ${address}`);
-        console.log('Get Rewards');
         const rewards = await this.getRewards(address);
-        console.log('Get Staked MOVR info');
         const staked = await this.getMovrStaked(address);
-        console.log('Get MOVR Price');
         const price = await this.getPrice();
 
-        console.log('Build Data');
         const datas: StakingData = {
             address: address,
             price: price,
@@ -69,7 +64,6 @@ class MovrService {
             datas.futureRewards = this.getFutureRewards(price, datas.totalReward, datas.stakingHours, datas.rewards);
         }
 
-        console.log('Return data sending');
         return datas;
     }
 
@@ -85,11 +79,9 @@ class MovrService {
         future.hrsTil1Movr = 1 / future.movr;
         future.daysTil1Movr = future.hrsTil1Movr / 24;
         const diff = (total - Math.floor(total));
-        console.log('total', total);
-        console.log('floor', Math.floor(total));
-        console.log('diff', diff);
+        
         const num = 1 - diff;
-        console.log('num', num);
+        
         future.hrsTilNextMovr = (1 - (total - Math.floor(total))) / future.movr;
         future.daysTilNextMovr = future.hrsTilNextMovr / 24;
 

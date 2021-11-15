@@ -12,8 +12,6 @@ class MovrController {
         
         const rewards = await svc.getAddressDetails(address);
 
-        console.log('rewards returned');
-
         res.status(200).json(rewards);
     }
 }

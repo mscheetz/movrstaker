@@ -22,7 +22,7 @@ const app = express();
 dotenv.config()
 
 const port = process.env.PORT || 3000;
-const distDir = `./dist/movrstaker`;
+const distDir = `./dist/movrstakr`;
 const publicDir = `./dist/static`;
 
 const forceSSL = function() {
@@ -46,11 +46,6 @@ app.use(helmet());
 app.use(bodyParser.json());
 
 app.use("/api", routes);
-
-app.get('/hi', function(req, res) {
-  console.log('hi triggered');
-  res.status(200).json('hi');
-});
 
 app.get('*.*', express.static(distDir, {maxAge: '1yr'}));
 
