@@ -1,11 +1,18 @@
 version: '3.8'
 services:
   server:
-    container_name: movrstakr
-    restart: always
-    build: .
-    image: movrstakr
-    environment: 
-      - PORT=3000
+    build:
+        context: ./
+        dockerfile: Dockerfile.server        
+    container_name: server    
     ports:
-      - '3000:3000'
+      - '8080:8080'
+  ui:
+    build:
+      context: ./
+      dockerfile: Dockerfile.ui
+    container_name: ui
+    ports:
+      - 4200:80
+    links:
+      - server

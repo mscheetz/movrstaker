@@ -1,0 +1,17 @@
+FROM node:12.16.1-alpine as build
+
+WORKDIR /usr/src/app
+
+COPY package*.json ./
+
+RUN npm install
+
+RUN npm i -g @angular/cli
+
+COPY . .
+
+RUN npm run ui:build:prod
+
+FROM nginx:1.15.8-alpine
+
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html

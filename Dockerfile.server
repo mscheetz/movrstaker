@@ -1,0 +1,22 @@
+FROM node:12.16.1-alpine
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+RUN cat /sys/fs/cgroup/memory/memory.usage_in_bytes | awk '{ byte = $1 /1024/1024; print byte " MB" }'
+
+
+RUN npm i typescript -g
+
+RUN npm run install:server
+
+RUN npm run clean:dist
+
+RUN npm run server:build:v2
+
+RUN npm run copy-nm:server
+
+EXPOSE 8080
+
+CMD ["node", "./dist/index.js"]
